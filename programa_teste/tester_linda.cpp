@@ -76,7 +76,7 @@ int main(int argc, char *argv[])
         std::cerr << "getaddrinfo: " << gai_strerror(ret) << "\n";
         return 1;
     }
-    5 int sock = -1;
+    int sock = -1;
     for (addrinfo *rp = result; rp != nullptr; rp = rp->ai_next)
     {
         sock = ::socket(rp->ai_family, rp->ai_socktype, rp->ai_protocol);
@@ -141,7 +141,6 @@ int main(int argc, char *argv[])
             expect_prefix(resp, "OK", "RD out2 apos EX 2");
             std::cout << " (RD out2 apos EX 2 retornou: \"" << resp << "\")\n";
         }
-        6
         // 5) Teste de EX com servico inexistente
         {
             std::string cmd = "WR in3 xyz";
