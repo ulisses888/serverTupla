@@ -43,3 +43,5 @@ EX chave outraChave 99
 Resposta esperada:
 NO-SERVICE
 
+Para o serverRust.rs:
+
