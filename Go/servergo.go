@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"sync"
 )
 
 type Tupla struct {
@@ -9,13 +10,14 @@ type Tupla struct {
 	Valor string
 }
 
-type Mensagem struct{
-	Operacao string
-	Chave string
+type Mensagem struct {
+	Operacao   string
+	Chave      string
 	ChaveSaida string //aq pro ex
-	Valor string
-	Servico string //aq pro ex tbm
+	Valor      string
+	Servico    string //aq pro ex tbm
 }
+
 //type MensagemEX struct{
 //	Operacao string
 //	Chave string
@@ -23,28 +25,36 @@ type Mensagem struct{
 //	Servico string
 //}
 
-func main(){
-fmt.println("Hello world!")
-mensagens <- Mensagem{
-	Operacao:   "WR",
-	Chave:      "teste",
-	Valor:      "12345",
-	ChaveSaida: "",
-	Servico:    "",
+func main() {
+	var wg sync.WaitGroup
+	wg.Add(1)
+	fmt.Println("Hello world!")
+	mensagens := make(chan Mensagem, 300)
+
+	go espacoTuplas(mensagens, &wg)
+
+	mensagens <- Mensagem{
+		Operacao:   "WR",
+		Chave:      "teste",
+		Valor:      "12345",
+		ChaveSaida: "",
+		Servico:    "",
+	}
+	close(mensagens)
+	wg.Wait()
 }
-}
 
-
-func espacoTuplas(){
-	mensagens :=make(chan Mensagem,300)
-//	mensagensEx :=make(chan MensagemEX)
-
+func espacoTuplas(mensagens chan Mensagem, wg *sync.WaitGroup) {
+	//	mensagensEx :=make(chan MensagemEX)
+	defer wg.Done()
 	for msg := range mensagens {
-		switch msg.Operacao{
+		switch msg.Operacao {
 		case "WR":
-			fmt.Println("WR");
+			fmt.Println("WR")
 		case "RD":
-			fmt.Println("RD")		
+			fmt.Println("RD")
 		}
+
+	}
 
 }
