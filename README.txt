@@ -43,4 +43,15 @@ EX chave outraChave 99
 Resposta esperada:
 NO-SERVICE
 
+Para o servergo.go:
+Execução:
+go run servergo.go
 
+Fiz a execução usando o WSL.
+O servidor utiliza a porta TCP 54321 definida na func main.
+Para o ip: 127.0.0.1
+
+Os serviços disponíveis são os mesmos usados como exemplo na especificação do projeto final e no server em C++:
+Serviço 1: converte o valor para letras maiúsculas.
+Serviço 2: inverte a string.
+Serviço 3: retorna o tamanho da string como texto.
